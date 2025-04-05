@@ -14,7 +14,7 @@ class EstateProperty(models.Model):
         ("offer_accepted", "Offer Accepted"),
         ("sold", "Sold"),
         ("canceled", "Canceled")
-    ], default='new')
+    ], copy=False, requiered=True, default='new') 
     postcode = fields.Char()
     date_availability = fields.Date(copy=False, default=lambda self: fields.Date.today() + relativedelta(months=3))
     selling_price = fields.Float(readonly=True, copy=False)  # readonly para activar o desactivar campos
