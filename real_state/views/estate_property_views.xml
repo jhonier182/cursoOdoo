@@ -1,10 +1,12 @@
 <?xml version="1.0"?>
+<!-- Declaración XML que indica la versión del documento -->
 <odoo>
+  <!-- Definición de la acción de ventana para propiedades inmobiliarias -->
   <record id="estate_property_action" model="ir.actions.act_window">
-   <field name="name">Properties</field>
-   <field name="res_model">estate.property</field>
-   <field name="view_mode">list,form</field>
-   <field name="help" type= "html">
+   <field name="name">Properties</field> <!-- Nombre que aparecerá en el menú -->
+   <field name="res_model">estate.property</field> <!-- Modelo de datos que se mostrará -->
+   <field name="view_mode">list,form</field> <!-- Modos de vista disponibles: lista y formulario -->
+   <field name="help" type= "html"> <!-- Mensaje de ayuda cuando no hay registros -->
      <p class="o_view_nocontent_smiling_face">
          Create Your first property!
      </p>
@@ -17,56 +19,63 @@
     </field>
   </record>
 
+  <!-- Definición de la vista de lista para propiedades inmobiliarias -->
   <record id="estate_property_view_list" model="ir.ui.view">
-  <field name="name">estate.property.tree</field>
-  <field name="model">estate.property</field>
-  <field name="arch" type ="xml">
-       <list>
-        <field name="name" string="Título"/>
-        <field name="postcode" string="Código Postal"/>
-        <field name="bedrooms" string="Habitaciones"/>
-        <field name="living_area" string="Área Habitable"/>
-        <field name="selling_price" string="Precio de Venta"/>
-        <field name="date_availability" string="Disponible Desde"/>
+  <field name="name">estate.property.tree</field> <!-- Nombre técnico de la vista -->
+  <field name="model">estate.property</field> <!-- Modelo asociado a esta vista -->
+  <field name="arch" type ="xml"> <!-- Arquitectura de la vista en XML -->
+       <list> <!-- Elemento raíz para la vista de lista -->
+        <field name="name" string="Título"/> <!-- Campo nombre con etiqueta personalizada -->
+        <field name="postcode" string="Código Postal"/> <!-- Campo código postal -->
+        <field name="bedrooms" string="Habitaciones"/> <!-- Campo número de habitaciones -->
+        <field name="living_area" string="Área Habitable"/> <!-- Campo área habitable -->
+        <field name="selling_price" string="Precio de Venta"/> <!-- Campo precio de venta -->
+        <field name="date_availability" string="Disponible Desde"/> <!-- Campo fecha de disponibilidad -->
        </list> 
    </field>
   </record>
 
+  <!-- Definición de la vista de formulario para propiedades inmobiliarias -->
   <record id="estate_property_view_form" model="ir.ui.view">
-  <field name="name">estate.property.form</field>
-  <field name="model">estate.property</field>
-  <field name="arch" type="xml">
-    <form string="Property">
-      <sheet>
-        <field name="active" invisible="1"/>
-        <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
-        <group>
-          <group string="Información General">
-            <field name="name"/>
-            <field name="postcode"/>
-            <field name="state"/>
+  <field name="name">estate.property.form</field> <!-- Nombre técnico de la vista -->
+  <field name="model">estate.property</field> <!-- Modelo asociado a esta vista -->
+  <field name="arch" type="xml"> <!-- Arquitectura de la vista en XML -->
+    <form string="Property"> <!-- Elemento raíz para la vista de formulario -->
+      <sheet> <!-- Contenedor principal del formulario -->
+        <field name="active" invisible="1"/> <!-- Campo activo oculto pero disponible para lógica -->
+        <widget string="Opcion de archivo" name="web_ribbon" title="Archivado" bg_color="text-bg-danger" invisible="active"/> <!-- Cinta que aparece cuando el registro está archivado -->
+        <div class="oe_button_box" name="button_box"> <!-- Contenedor para botones de estadísticas -->
+          <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive"> <!-- Botón para archivar/desarchivar -->
+            <field name="active" widget="boolean_button" options="{'terminology': 'archive'}"/> <!-- Campo booleano con terminología personalizada -->
+          </button>
+        </div>
+        <group> <!-- Grupo principal de campos -->
+          <group string="Información General"> <!-- Subgrupo con título -->
+            <field name="name"/> <!-- Campo nombre -->
+            <field name="postcode"/> <!-- Campo código postal -->
+            <field name="state"/> <!-- Campo estado -->
           </group>
-          <group string="Detalles de la Propiedad">
-            <field name="bedrooms"/>
-            <field name="living_area"/>
-            <field name="facades"/>
-          </group>
-        </group>
-        <group>
-          <group string="Características Adicionales">
-            <field name="garage"/>
-            <field name="garden"/>
-            <field name="garden_area" invisible="not garden"/>
-            <field name="garden_orientation" invisible="not garden"/>
-          </group>
-          <group string="Información Comercial">
-            <field name="selling_price"/>
-            <field name="date_availability"/>
+          <group string="Detalles de la Propiedad"> <!-- Subgrupo con título -->
+            <field name="bedrooms"/> <!-- Campo número de habitaciones -->
+            <field name="living_area"/> <!-- Campo área habitable -->
+            <field name="facades"/> <!-- Campo número de fachadas -->
           </group>
         </group>
-        <notebook>
-          <page string="Descripción">
-            <field name="description"/>
+        <group> <!-- Segundo grupo principal de campos -->
+          <group string="Características Adicionales"> <!-- Subgrupo con título -->
+            <field name="garage"/> <!-- Campo booleano para garaje -->
+            <field name="garden"/> <!-- Campo booleano para jardín -->
+            <field name="garden_area" invisible="not garden"/> <!-- Campo área del jardín, visible solo si hay jardín -->
+            <field name="garden_orientation" invisible="not garden"/> <!-- Campo orientación del jardín, visible solo si hay jardín -->
+          </group>
+          <group string="Información Comercial"> <!-- Subgrupo con título -->
+            <field name="selling_price"/> <!-- Campo precio de venta -->
+            <field name="date_availability"/> <!-- Campo fecha de disponibilidad -->
+          </group>
+        </group>
+        <notebook> <!-- Contenedor de pestañas -->
+          <page string="Descripción"> <!-- Pestaña con título -->
+            <field name="description"/> <!-- Campo descripción -->
           </page>
         </notebook>
       </sheet>
@@ -76,26 +85,28 @@
 
 
   
-  <!-- aqui creamos filtros de busqueda en la paggina-->
+  <!-- Definición de la vista de búsqueda para propiedades inmobiliarias -->
   <record id="estate_property_view_search" model="ir.ui.view">
-    <field name="name">estate.property.search</field>
-    <field name="model">estate.property</field>
-    <field name="arch" type="xml">
-      <search>
-        <field name="name"/>
-        <field name="postcode"/>
-        <field name="bedrooms"/>
-        <field name="living_area"/>
-        <field name="selling_price"/>
-        <separator/>
-        <filter string="Disponible" name="available" domain="[('state', 'in', ['new', 'offer_received'])]"/>
-        <filter string="Vendido" name="sold" domain="[('state', '=', 'sold')]"/>
-        <separator/>
-        <filter string="Con Jardín" name="with_garden" domain="[('garden', '=', True)]"/>
-        <filter string="Con Garaje" name="with_garage" domain="[('garage', '=', True)]"/>
-        <group expand="1" string="Agrupar Por">
-          <filter string="Estado" name="groupby_state" context="{'group_by': 'state'}"/>
-          <filter string="Código Postal" name="groupby_postcode" context="{'group_by': 'postcode'}"/>
+    <field name="name">estate.property.search</field> <!-- Nombre técnico de la vista -->
+    <field name="model">estate.property</field> <!-- Modelo asociado a esta vista -->
+    <field name="arch" type="xml"> <!-- Arquitectura de la vista en XML -->
+      <search> <!-- Elemento raíz para la vista de búsqueda -->
+        <field name="name"/> <!-- Campo nombre para búsqueda -->
+        <field name="postcode"/> <!-- Campo código postal para búsqueda -->
+        <field name="bedrooms"/> <!-- Campo habitaciones para búsqueda -->
+        <field name="living_area"/> <!-- Campo área habitable para búsqueda -->
+        <field name="selling_price"/> <!-- Campo precio de venta para búsqueda -->
+        <separator/> <!-- Separador visual -->
+        <filter name="available" domain="[('state', 'in', ['new', 'offer_received'])]"/> <!-- Filtro para propiedades disponibles -->
+        <filter name="sold" domain="[('state', '=', 'sold')]"/> <!-- Filtro para propiedades vendidas -->
+        <separator/> <!-- Separador visual -->
+        <filter name="with_garden" domain="[('garden', '=', True)]"/> <!-- Filtro para propiedades con jardín -->
+        <filter name="with_garage" domain="[('garage', '=', True)]"/> <!-- Filtro para propiedades con garaje -->
+        <separator/> <!-- Separador visual -->
+        <filter string="Archivados" name="inactive" domain="[('active', '=', False)]"/> <!-- Filtro para propiedades archivadas -->
+        <group expand="1"> <!-- Grupo de agrupación expandido por defecto -->
+          <filter name="groupby_state" context="{'group_by': 'state'}"/> <!-- Agrupación por estado -->
+          <filter name="groupby_postcode" context="{'group_by': 'postcode'}"/> <!-- Agrupación por código postal -->
         </group>
       </search>
     </field>
@@ -104,4 +115,3 @@
 
 
 </odoo>
- 

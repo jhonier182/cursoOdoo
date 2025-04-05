@@ -5,28 +5,28 @@ class EstateProperty(models.Model):
     _name = 'estate.property'
     _description = 'Estate Property'
     
-    name = fields.Char(required=True)
-    description = fields.Text()
-    active = fields.Boolean(default=True)  
+    name = fields.Char(string="Nombre", required=True)
+    description = fields.Text(string="Descripción")
+    active = fields.Boolean(string="Activo", default=True)  
     state = fields.Selection([
         ("new", "New"),
         ("offer_received", "Offer Received"),
         ("offer_accepted", "Offer Accepted"),
         ("sold", "Sold"),
         ("canceled", "Canceled")
-    ], copy=False, requiered=True, default='new') 
-    postcode = fields.Char()
-    date_availability = fields.Date(copy=False, default=lambda self: fields.Date.today() + relativedelta(months=3))
-    selling_price = fields.Float(readonly=True, copy=False)  # readonly para activar o desactivar campos
-    bedrooms = fields.Integer(default=2)
-    living_area = fields.Integer()
-    facades = fields.Integer()
-    garage = fields.Boolean() 
-    garden = fields.Boolean()  
-    garden_area = fields.Integer()
+    ], string="Estado", copy=False, requiered=True, default='new') 
+    postcode = fields.Char(string="Código Postal")
+    date_availability = fields.Date(string="Fecha de Disponibilidad", copy=False, default=lambda self: fields.Date.today() + relativedelta(months=3))
+    selling_price = fields.Float(string="Precio de Venta", readonly=True, copy=False)  # readonly para activar o desactivar campos
+    bedrooms = fields.Integer(string="Habitaciones", default=2)
+    living_area = fields.Integer(string="Área Habitable")
+    facades = fields.Integer(string="Fachadas")
+    garage = fields.Boolean(string="Garaje") 
+    garden = fields.Boolean(string="Jardín")  
+    garden_area = fields.Integer(string="Área del Jardín")
     garden_orientation = fields.Selection([
         ('north', 'Norte'),
         ('south', 'Sur'),
         ('east', 'Este'),
         ('west', 'Oeste')
-    ])
+    ], string="Orientación del Jardín")
