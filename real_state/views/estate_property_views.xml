@@ -16,5 +16,92 @@
      </p>
     </field>
   </record>
+
+  <record id="estate_property_view_list" model="ir.ui.view">
+  <field name="name">estate.property.tree</field>
+  <field name="model">estate.property</field>
+  <field name="arch" type ="xml">
+       <list>
+        <field name="name" string="Título"/>
+        <field name="postcode" string="Código Postal"/>
+        <field name="bedrooms" string="Habitaciones"/>
+        <field name="living_area" string="Área Habitable"/>
+        <field name="selling_price" string="Precio de Venta"/>
+        <field name="date_availability" string="Disponible Desde"/>
+       </list> 
+   </field>
+  </record>
+
+  <record id="estate_property_view_form" model="ir.ui.view">
+  <field name="name">estate.property.form</field>
+  <field name="model">estate.property</field>
+  <field name="arch" type="xml">
+    <form string="Property">
+      <sheet>
+        <field name="active" invisible="1"/>
+        <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+        <group>
+          <group string="Información General">
+            <field name="name"/>
+            <field name="postcode"/>
+            <field name="state"/>
+          </group>
+          <group string="Detalles de la Propiedad">
+            <field name="bedrooms"/>
+            <field name="living_area"/>
+            <field name="facades"/>
+          </group>
+        </group>
+        <group>
+          <group string="Características Adicionales">
+            <field name="garage"/>
+            <field name="garden"/>
+            <field name="garden_area" invisible="not garden"/>
+            <field name="garden_orientation" invisible="not garden"/>
+          </group>
+          <group string="Información Comercial">
+            <field name="selling_price"/>
+            <field name="date_availability"/>
+          </group>
+        </group>
+        <notebook>
+          <page string="Descripción">
+            <field name="description"/>
+          </page>
+        </notebook>
+      </sheet>
+    </form>
+  </field>
+  </record>
+
+
+  
+  <!-- aqui creamos filtros de busqueda en la paggina-->
+  <record id="estate_property_view_search" model="ir.ui.view">
+    <field name="name">estate.property.search</field>
+    <field name="model">estate.property</field>
+    <field name="arch" type="xml">
+      <search>
+        <field name="name"/>
+        <field name="postcode"/>
+        <field name="bedrooms"/>
+        <field name="living_area"/>
+        <field name="selling_price"/>
+        <separator/>
+        <filter string="Disponible" name="available" domain="[('state', 'in', ['new', 'offer_received'])]"/>
+        <filter string="Vendido" name="sold" domain="[('state', '=', 'sold')]"/>
+        <separator/>
+        <filter string="Con Jardín" name="with_garden" domain="[('garden', '=', True)]"/>
+        <filter string="Con Garaje" name="with_garage" domain="[('garage', '=', True)]"/>
+        <group expand="1" string="Agrupar Por">
+          <filter string="Estado" name="groupby_state" context="{'group_by': 'state'}"/>
+          <filter string="Código Postal" name="groupby_postcode" context="{'group_by': 'postcode'}"/>
+        </group>
+      </search>
+    </field>
+  </record>
+
+
+
 </odoo>
  
