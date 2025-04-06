@@ -42,12 +42,12 @@
   <field name="arch" type="xml"> <!-- Arquitectura de la vista en XML -->
     <form string="Property"> <!-- Elemento raíz para la vista de formulario -->
       <sheet> <!-- Contenedor principal del formulario -->
-        <field name="active" invisible="1"/> <!-- Campo activo oculto pero disponible para lógica -->
-        <widget string="Opcion de archivo" name="web_ribbon" title="Archivado" bg_color="text-bg-danger" invisible="active"/> <!-- Cinta que aparece cuando el registro está archivado -->
-        <div class="oe_button_box" name="button_box"> <!-- Contenedor para botones de estadísticas -->
-          <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive"> <!-- Botón para archivar/desarchivar -->
-            <field name="active" widget="boolean_button" options="{'terminology': 'archive'}"/> <!-- Campo booleano con terminología personalizada -->
-          </button>
+        <widget name="web_ribbon" title="Archivado" bg_color="text-bg-danger" invisible="active"/>
+        <div class="oe_title" style="width: 200px;">
+          <label for="active" string="Estado de la Propiedad"/>
+          <h3>
+            <field name="active" string="Activo" class="oe_inline" style="width: 50px;" help="Marque esta casilla si la propiedad está activa"/>
+          </h3>
         </div>
         <group> <!-- Grupo principal de campos -->
           <group string="Información General"> <!-- Subgrupo con título -->
