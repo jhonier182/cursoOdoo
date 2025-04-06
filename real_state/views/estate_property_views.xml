@@ -38,44 +38,44 @@
 
   <!-- Definición de la vista de formulario para propiedades inmobiliarias -->
   <record id="estate_property_view_form" model="ir.ui.view">
-  <field name="name">estate.property.form</field> <!-- Nombre técnico de la vista -->
-  <field name="model">estate.property</field> <!-- Modelo asociado a esta vista -->
-  <field name="arch" type="xml"> <!-- Arquitectura de la vista en XML -->
-    <form string="Property"> <!-- Elemento raíz para la vista de formulario -->
-      <sheet> <!-- Contenedor principal del formulario -->
+  <field name="name">estate.property.form</field>
+  <field name="model">estate.property</field>
+  <field name="arch" type="xml">
+    <form string="Property">
+      <sheet>
         <widget name="web_ribbon" title="Archivado" bg_color="text-bg-danger" invisible="active"/>
         <div class="oe_button_box" name="button_box">
           <button class="oe_stat_button" type="object" name="toggle_active" icon="fa-archive">
             <field name="active" widget="boolean_button" options="{'terminology': 'archive'}"/>
           </button>
         </div>
-        <group> <!-- Grupo principal de campos -->
-          <group string="Información General"> <!-- Subgrupo con título -->
-            <field name="name"/> <!-- Campo nombre -->
-            <field name="postcode"/> <!-- Campo código postal -->
-            <field name="state"/> <!-- Campo estado -->
+        <group>
+          <group string="Información General">
+            <field name="name"/>
+            <field name="postcode"/>
+            <field name="state"/>
           </group>
-          <group string="Detalles de la Propiedad"> <!-- Subgrupo con título -->
-            <field name="bedrooms"/> <!-- Campo número de habitaciones -->
-            <field name="living_area"/> <!-- Campo área habitable -->
-            <field name="facades"/> <!-- Campo número de fachadas -->
-          </group>
-        </group>
-        <group> <!-- Segundo grupo principal de campos -->
-          <group string="Características Adicionales"> <!-- Subgrupo con título -->
-            <field name="garage"/> <!-- Campo booleano para garaje -->
-            <field name="garden"/> <!-- Campo booleano para jardín -->
-            <field name="garden_area" invisible="not garden"/> <!-- Campo área del jardín, visible solo si hay jardín -->
-            <field name="garden_orientation" invisible="not garden"/> <!-- Campo orientación del jardín, visible solo si hay jardín -->
-          </group>
-          <group string="Información Comercial"> <!-- Subgrupo con título -->
-            <field name="selling_price"/> <!-- Campo precio de venta -->
-            <field name="date_availability"/> <!-- Campo fecha de disponibilidad -->
+          <group string="Detalles de la Propiedad">
+            <field name="bedrooms"/>
+            <field name="living_area"/>
+            <field name="facades"/>
           </group>
         </group>
-        <notebook> <!-- Contenedor de pestañas -->
-          <page string="Descripción"> <!-- Pestaña con título -->
-            <field name="description"/> <!-- Campo descripción -->
+        <group>
+          <group string="Características Adicionales">
+            <field name="garage"/>
+            <field name="garden"/>
+            <field name="garden_area" invisible="not garden"/>
+            <field name="garden_orientation" invisible="not garden"/>
+          </group>
+          <group string="Información Comercial">
+            <field name="selling_price"/>
+            <field name="date_availability"/>
+          </group>
+        </group>
+        <notebook>
+          <page string="Descripción">
+            <field name="description"/>
           </page>
         </notebook>
       </sheet>
@@ -83,11 +83,10 @@
   </field>
   </record>
 
-
   
-  <!-- Definición de la vista de búsqueda para propiedades inmobiliarias -->
+  <!-- Definición de la vista de filtros para propiedades inmobiliarias -->
   <record id="estate_property_view_search" model="ir.ui.view">
-    <field name="name">estate.property.search</field>
+    <field name="name">estate.property.filters</field>
     <field name="model">estate.property</field>
     <field name="arch" type="xml">
       <search>
@@ -97,16 +96,16 @@
         <field name="living_area"/>
         <field name="selling_price"/>
         <separator/>
-        <filter name="available" domain="[('state', 'in', ['new', 'offer_received'])]"/>
-        <filter name="sold" domain="[('state', '=', 'sold')]"/>
+        <filter string="Disponibles" name="available" domain="[('state', 'in', ['new', 'offer_received'])]"/>
+        <filter string="Vendidas" name="sold" domain="[('state', '=', 'sold')]"/>
         <separator/>
-        <filter name="with_garden" domain="[('garden', '=', True)]"/>
-        <filter name="with_garage" domain="[('garage', '=', True)]"/>
+        <filter string="Con Jardín" name="with_garden" domain="[('garden', '=', True)]"/>
+        <filter string="Con Garaje" name="with_garage" domain="[('garage', '=', True)]"/>
         <separator/>
         <filter string="Archivados" name="inactive" domain="[('active', '=', False)]"/>
-        <group expand="1">
-          <filter name="groupby_state" context="{'group_by': 'state'}"/>
-          <filter name="groupby_postcode" context="{'group_by': 'postcode'}"/>
+        <group expand="1" string="Agrupar Por">
+          <filter string="Estado" name="groupby_state" context="{'group_by': 'state'}"/>
+          <filter string="Código Postal" name="groupby_postcode" context="{'group_by': 'postcode'}"/>
         </group>
       </search>
     </field>
