@@ -25,12 +25,13 @@
   <field name="model">estate.property</field> <!-- Modelo asociado a esta vista -->
   <field name="arch" type ="xml"> <!-- Arquitectura de la vista en XML -->
        <list> <!-- Elemento raíz para la vista de lista -->
-        <field name="name" string="Título"/> <!-- Campo nombre con etiqueta personalizada -->
-        <field name="postcode" string="Código Postal"/> <!-- Campo código postal -->
-        <field name="bedrooms" string="Habitaciones"/> <!-- Campo número de habitaciones -->
-        <field name="living_area" string="Área Habitable"/> <!-- Campo área habitable -->
-        <field name="selling_price" string="Precio de Venta"/> <!-- Campo precio de venta -->
-        <field name="date_availability" string="Disponible Desde"/> <!-- Campo fecha de disponibilidad -->
+        <field name="name" string="Título" width="200"/> <!-- Campo nombre con etiqueta personalizada -->
+        <field name="active" string="Estado" widget="boolean_toggle" width="100"/>
+        <field name="postcode" string="Código Postal" width="100"/> <!-- Campo código postal -->
+        <field name="bedrooms" string="Habitaciones" width="100"/> <!-- Campo número de habitaciones -->
+        <field name="living_area" string="Área Habitable" width="100"/> <!-- Campo área habitable -->
+        <field name="selling_price" string="Precio de Venta" width="100"/> <!-- Campo precio de venta -->
+        <field name="date_availability" string="Disponible Desde" width="150"/> <!-- Campo fecha de disponibilidad -->
        </list> 
    </field>
   </record>
