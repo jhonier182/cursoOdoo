@@ -21,13 +21,14 @@
 
   <!-- Definición de la vista de lista para propiedades inmobiliarias -->
   <record id="estate_property_view_list" model="ir.ui.view">
-  <field name="name">estate.property.tree</field> <!-- Nombre técnico de la vista -->
+  <field name="name">estate.property.list</field> <!-- Nombre técnico de la vista -->
   <field name="model">estate.property</field> <!-- Modelo asociado a esta vista -->
   <field name="arch" type ="xml"> <!-- Arquitectura de la vista en XML -->
        <list> <!-- Elemento raíz para la vista de lista -->
         <field name="name" string="Título" width="200"/> <!-- Campo nombre con etiqueta personalizada -->
         <field name="active" string="Estado" widget="boolean_toggle" width="100"/>
         <field name="postcode" string="Código Postal" width="100"/> <!-- Campo código postal -->
+         <field name="property_type_id" width="100"/> 
         <field name="bedrooms" string="Habitaciones" width="100"/> <!-- Campo número de habitaciones -->
         <field name="living_area" string="Área Habitable" width="100"/> <!-- Campo área habitable -->
         <field name="selling_price" string="Precio de Venta" width="100"/> <!-- Campo precio de venta -->
@@ -53,6 +54,7 @@
           <group string="Información General">
             <field name="name"/>
             <field name="postcode"/>
+             <field name="property_type_id"/>
             <field name="state"/>
           </group>
           <group string="Detalles de la Propiedad">
@@ -85,13 +87,14 @@
 
   
   <!-- Definición de la vista de filtros para propiedades inmobiliarias -->
-  <record id="estate_property_view_search" model="ir.ui.view">
-    <field name="name">estate.property.filters</field>
+  <record id="estate_property_view_search_filter" model="ir.ui.view">
+    <field name="name">estate.property.view.search.filter</field>
     <field name="model">estate.property</field>
     <field name="arch" type="xml">
       <search>
         <field name="name"/>
         <field name="postcode"/>
+         <field name="property_type_id"/>
         <field name="bedrooms"/>
         <field name="living_area"/>
         <field name="selling_price"/>
@@ -111,6 +114,19 @@
     </field>
   </record>
 
-
+  <!-- Definición de la acción de ventana para tipos de propiedades -->
+  <record id="estate_property_type_action" model="ir.actions.act_window">
+    <field name="name">Property Types</field>
+    <field name="res_model">estate.property.type</field>
+    <field name="view_mode">tree,form</field>
+    <field name="help" type="html">
+      <p class="o_view_nocontent_smiling_face">
+        Create your first property type!
+      </p>
+      <p>
+        Define the different types of properties you want to manage.
+      </p>
+    </field>
+  </record>
 
 </odoo>

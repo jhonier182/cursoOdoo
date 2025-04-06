@@ -18,7 +18,7 @@ class EstateProperty(models.Model):
         ("offer_accepted", "Offer Accepted"),  # Oferta aceptada
         ("sold", "Sold"),  # Vendido
         ("canceled", "Canceled")  # Cancelado
-    ], string="Estado", copy=False, requiered=True, default='new')  # No se copia al duplicar, es obligatorio y por defecto es 'new'
+    ], string="Estado", copy=False, required=True, default='new')  # No se copia al duplicar, es obligatorio y por defecto es 'new'
     # Campo para el código postal de la propiedad
     postcode = fields.Char(string="Código Postal")
     # Campo para la fecha de disponibilidad, no se copia al duplicar y por defecto es 3 meses después de hoy
@@ -44,4 +44,5 @@ class EstateProperty(models.Model):
         ('east', 'Este'),    # Orientación este
         ('west', 'Oeste')    # Orientación oeste
     ], string="Orientación del Jardín")
+    property_type_id = fields.Many2one("estate.property.type", string="Property Type")
 
