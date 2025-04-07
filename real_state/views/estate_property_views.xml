@@ -52,6 +52,7 @@
         </div>
         <group>
           <group string="Información General">
+            <field name="tags_ids" widget="many2many_tags" class="badge text-bg-primary rounded-pill"/>
             <field name="name"/>
             <field name="postcode"/>
             <field name="property_type_id" options="{'no_create': true, 'no_open': true}" widget="selection"/>
@@ -69,6 +70,7 @@
             <field name="garden"/>
             <field name="garden_area" invisible="not garden"/>
             <field name="garden_orientation" invisible="not garden"/>
+            <field name="total_area"/>
           </group>
           <group string="Información Comercial">
             <field name="selling_price"/>
@@ -78,6 +80,15 @@
         <notebook>
           <page string="Descripción">
             <field name="description"/>
+          </page>
+          <page string="Other Info">
+             <group>
+             <field name="salesperson_id"  widget="selection"/>
+             <field name="buyer_id" widget="selection"/>
+          </group>
+          </page>
+          <page string="Ofertas">
+            <field name="offer_ids"/>
           </page>
         </notebook>
       </sheet>

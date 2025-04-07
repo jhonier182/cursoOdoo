@@ -45,4 +45,13 @@ class EstateProperty(models.Model):
         ('west', 'Oeste')    # Orientación oeste
     ], string="Orientación del Jardín")
     property_type_id = fields.Many2one("estate.property.type", string="Property Type")
+    salesperson_id = fields.Many2one("res.users", string="Salesman", index=True, default=lambda self: self.env.user)
+    buyer_id = fields.Many2one("res.partner", string="Buyer", index=True, copy=False)
+    tags_ids =fields.Many2many("estate.property.tag",string="Property Tags")
+    offer_ids = fields.One2many("estate.property.offer", "property_id", string="Offers")
+    total_area = fields.Float(string="Área Total", compute="_compute_total_area")
 
+    @api.depends("living_area", "garden_area")
+    def _compute_total_area(self):
+        for record in self:
+            record.total_area = record.living_area + record.garden_area
