@@ -1,5 +1,5 @@
-from odoo import models, fields, api  # Importación de los módulos básicos de Odoo para definir modelos y campos
-from dateutil.relativedelta import relativedelta  # Importación para manejar operaciones con fechas
+from odoo import models, fields, api, UserError
+from dateutil.relativedelta import relativedelta
 
 class EstateProperty(models.Model):
     _name = 'estate.property'  # Identificador técnico del modelo en la base de datos
@@ -87,14 +87,14 @@ class EstateProperty(models.Model):
         """Método que cambia el estado de la propiedad a 'sold' (vendida)"""
         for record in self:
             if record.state == 'canceled':
-                raise models.ValidationError("Las propiedades canceladas no pueden marcarse como vendidas.")
-            record.state = 'sold'
+                raise UserError("Las propiedades canceladas no pueden marcarse como vendidas.")
+            record.state = 'sold'  
         return True
         
     def action_cancel(self):
         """Método que cambia el estado de la propiedad a 'canceled' (cancelada)"""
         for record in self:
             if record.state == 'sold':
-                raise models.ValidationError("Las propiedades vendidas no pueden cancelarse.")
+                raise UserError("Las propiedades vendidas no pueden cancelarse.")
             record.state = 'canceled'
         return True

@@ -89,7 +89,7 @@
               <field name="total_area"/>
             </group>
           </page>
-          <page string="Otra Información">
+          <page string="Otra Información"> 
             <group>
               <field name="salesperson_id" widget="selection" options="{'no_create': True}" string="Vendedor"/>
               <field name="buyer_id" widget="selection" options="{'no_create': True}" string="Comprador"/>
