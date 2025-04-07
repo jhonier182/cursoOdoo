@@ -54,7 +54,7 @@
           <group string="Información General">
             <field name="name"/>
             <field name="postcode"/>
-             <field name="property_type_id"/>
+            <field name="property_type_id" options="{'no_create': true, 'no_open': true}" widget="selection"/>
             <field name="state"/>
           </group>
           <group string="Detalles de la Propiedad">
