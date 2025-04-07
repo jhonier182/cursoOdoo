@@ -114,19 +114,6 @@
     </field>
   </record>
 
-  <!-- Definición de la acción de ventana para tipos de propiedades -->
-  <record id="estate_property_type_action" model="ir.actions.act_window">
-    <field name="name">Property Types</field>
-    <field name="res_model">estate.property.type</field>
-    <field name="view_mode">tree,form</field>
-    <field name="help" type="html">
-      <p class="o_view_nocontent_smiling_face">
-        Create your first property type!
-      </p>
-      <p>
-        Define the different types of properties you want to manage.
-      </p>
-    </field>
-  </record>
+ 
 
 </odoo>
