@@ -44,6 +44,10 @@
   <field name="model">estate.property</field>
   <field name="arch" type="xml">
     <form string="Property">
+       <header>
+        <button name="action_sold" type="object" string="Sold"/>
+        <button name="action_cancel" type="object" string="Cancel"/>
+       </header>
       <sheet>
         <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
         <div class="oe_button_box" name="button_box">
@@ -59,35 +63,35 @@
             <field name="property_type_id" options="{'no_create': true, 'no_open': true}" widget="selection"/>
             <field name="state"/>
           </group>
-          <group string="Property Details">
-            <field name="bedrooms"/>
-            <field name="living_area"/>
-            <field name="facades"/>
-          </group>
-        </group>
-        <group>
-          <group string="Additional Features">
-            <field name="garage"/>
-            <field name="garden"/>
-            <field name="garden_area" invisible="not garden"/>
-            <field name="garden_orientation" invisible="not garden"/>
-            <field name="total_area"/>
-          </group>
+
           <group string="Commercial Information">
             <field name="selling_price"/>
             <field name="best_price"/> <!-- Añadido el campo mejor oferta -->
             <field name="date_availability"/>
-          </group>
+          </group>      
         </group>
+
         <notebook>
-          <page string="Description">
+          <page string="Descripción">
             <field name="description"/>
+            <group>
+             <field name="bedrooms"/>
+              <field name="living_area"/>
+              <field name="facades"/> 
+            </group>
+            <group>
+              <field name="garage"/>
+              <field name="garden"/>
+            </group>
+            <group>
+              <field name="garden_area"/>
+              <field name="garden_orientation"/>
+              <field name="total_area"/>
+            </group>
           </page>
           <page string="Other Info">
-             <group>
-             <field name="salesperson_id"  widget="selection"/>
-             <field name="buyer_id" widget="selection"/>
-          </group>
+            <field name="salesperson_id" widget="selection"/>
+            <field name="buyer_id" widget="selection"/>
           </page>
           <page string="Offers">
             <field name="offer_ids"/>

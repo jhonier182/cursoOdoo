@@ -81,3 +81,19 @@ class EstateProperty(models.Model):
         else:
             self.garden_area = None  # Restablece el área del jardín a None si no está habilitado
             self.garden_orientation = None  # Restablece la orientación del jardín a None
+            
+    def action_sold(self):
+        """Método que cambia el estado de la propiedad a 'sold' (vendida)"""
+        for record in self:
+            if record.state == 'canceled':
+                raise models.ValidationError("Las propiedades canceladas no pueden marcarse como vendidas.")
+            record.state = 'sold'
+        return True
+        
+    def action_cancel(self):
+        """Método que cambia el estado de la propiedad a 'canceled' (cancelada)"""
+        for record in self:
+            if record.state == 'sold':
+                raise models.ValidationError("Las propiedades vendidas no pueden cancelarse.")
+            record.state = 'canceled'
+        return True
