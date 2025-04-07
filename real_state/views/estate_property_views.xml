@@ -89,11 +89,13 @@
               <field name="total_area"/>
             </group>
           </page>
-          <page string="Other Info">
-            <field name="salesperson_id" widget="selection"/>
-            <field name="buyer_id" widget="selection"/>
+          <page string="Otra Información">
+            <group>
+              <field name="salesperson_id" widget="selection" options="{'no_create': True}" string="Vendedor"/>
+              <field name="buyer_id" widget="selection" options="{'no_create': True}" string="Comprador"/>
+            </group>
           </page>
-          <page string="Offers">
+          <page string="Ofertas">
             <field name="offer_ids"/>
           </page>
         </notebook>

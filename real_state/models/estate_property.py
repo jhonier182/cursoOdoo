@@ -61,7 +61,8 @@ class EstateProperty(models.Model):
     @api.depends("offer_ids.price")
     def _compute_best_price(self):
         for record in self:
-            record.best_price = max(record.offer_ids.mapped("price"))  # Cálculo del mejor precio de las ofertas
+            prices = record.offer_ids.mapped("price")
+            record.best_price = max(prices) if prices else 0.0  # Si no hay ofertas, devuelve 0
 
     # Este método se activa cuando cambia el estado del campo 'garden'. 
     # Si el jardín está habilitado, se establece el área del jardín en 10 y la orientación en "norte". 
