@@ -12,10 +12,10 @@
         <field name="model">estate.property.offer</field>
         <field name="arch" type="xml">
             <list>
-                <field name="price" string="Precio"/>
-                <field name="partner_id" string="Cliente" widget="selection" options="{'no_create': True}"/>
-                <field name="status" string="Estado"/>
-                <field name="property_id" string="Propiedad" widget="selection" options="{'no_create': True}"/>
+                <field name="partner_id" string="Cliente" colspan="2"/>
+                <field name="date_deadline" string="Fecha de Caducidad" colspan="2"/>
+                <field name="validity" string="Validez" colspan="1"/>
+                <field name="price" string="Precio" colspan="1"/>
             </list>
         </field>
     </record>
@@ -28,10 +28,10 @@
             <form>
                 <sheet>
                     <group>
-                        <field name="price"/>
-                        <field name="partner_id" widget="selection" options="{'no_create': True}"/>
-                        <field name="status"/>
-                        <field name="property_id" widget="selection" options="{'no_create': True}"/>
+                        <field name="partner_id" widget="selection" options="{'no_create': True}" colspan="2"/>
+                        <field name="date_deadline" string="Fecha de Caducidad" colspan="1"/>
+                        <field name="validity" string="Validez" colspan="1"/>
+                        <field name="price" colspan="1"/>
                     </group>
                 </sheet>
             </form>
@@ -44,10 +44,10 @@
         <field name="model">estate.property.offer</field>
         <field name="arch" type="xml">
             <search>
-                <field name="price"/>
-                <field name="partner_id"/>
-                <field name="status"/>
-                <field name="property_id"/>
+                <field name="partner_id" colspan="2"/>
+                <field name="date_deadline" colspan="1"/>
+                <field name="validity" colspan="1"/>
+                <field name="price" colspan="1"/>
             </search>
         </field>
     </record>

@@ -1,17 +1,17 @@
 <?xml version="1.0"?>
-<!-- Declaración XML que indica la versión del documento -->
+<!-- XML declaration indicating the version of the document -->
 <odoo>
-  <!-- Definición de la acción de ventana para propiedades inmobiliarias -->
+  <!-- Definition of the window action for real estate properties -->
   <record id="estate_property_action" model="ir.actions.act_window">
-   <field name="name">Properties</field> <!-- Nombre que aparecerá en el menú -->
-   <field name="res_model">estate.property</field> <!-- Modelo de datos que se mostrará -->
-   <field name="view_mode">list,form</field> <!-- Modos de vista disponibles: lista y formulario -->
-   <field name="help" type= "html"> <!-- Mensaje de ayuda cuando no hay registros -->
+   <field name="name">Properties</field> <!-- Name that will appear in the menu -->
+   <field name="res_model">estate.property</field> <!-- Data model to be displayed -->
+   <field name="view_mode">list,form</field> <!-- Available view modes: list and form -->
+   <field name="help" type="html"> <!-- Help message when there are no records -->
      <p class="o_view_nocontent_smiling_face">
          Create Your first property!
      </p>
      <p>
-       Here you can Create and manage all of your real estate Properties.
+       Here you can create and manage all of your real estate properties.
      </p>
      <p>
        Let's get that next amazing deal!
@@ -19,66 +19,68 @@
     </field>
   </record>
 
-  <!-- Definición de la vista de lista para propiedades inmobiliarias -->
+  <!-- Definition of the list view for real estate properties -->
   <record id="estate_property_view_list" model="ir.ui.view">
-  <field name="name">estate.property.list</field> <!-- Nombre técnico de la vista -->
-  <field name="model">estate.property</field> <!-- Modelo asociado a esta vista -->
-  <field name="arch" type ="xml"> <!-- Arquitectura de la vista en XML -->
-       <list> <!-- Elemento raíz para la vista de lista -->
-        <field name="name" string="Título" width="200"/> <!-- Campo nombre con etiqueta personalizada -->
-        <field name="active" string="Estado" widget="boolean_toggle" width="100"/>
-        <field name="postcode" string="Código Postal" width="100"/> <!-- Campo código postal -->
+  <field name="name">estate.property.list</field> <!-- Technical name of the view -->
+  <field name="model">estate.property</field> <!-- Model associated with this view -->
+  <field name="arch" type ="xml"> <!-- Architecture of the view in XML -->
+       <list> <!-- Root element for the list view -->
+        <field name="name" string="Title" width="200"/> <!-- Name field with custom label -->
+        <field name="active" string="Status" widget="boolean_toggle" width="100"/>
+        <field name="postcode" string="Postal Code" width="100"/> <!-- Postal code field -->
          <field name="property_type_id" width="100"/> 
-        <field name="bedrooms" string="Habitaciones" width="100"/> <!-- Campo número de habitaciones -->
-        <field name="living_area" string="Área Habitable" width="100"/> <!-- Campo área habitable -->
-        <field name="selling_price" string="Precio de Venta" width="100"/> <!-- Campo precio de venta -->
-        <field name="date_availability" string="Disponible Desde" width="150"/> <!-- Campo fecha de disponibilidad -->
+        <field name="bedrooms" string="Bedrooms" width="100"/> <!-- Number of bedrooms field -->
+        <field name="living_area" string="Living Area" width="100"/> <!-- Living area field -->
+        <field name="selling_price" string="Selling Price" width="100"/> <!-- Selling price field -->
+        <field name="best_price" string="Mejor Oferta" width="100"/> <!-- Mejor oferta field -->
+        <field name="date_availability" string="Available From" width="150"/> <!-- Availability date field -->
        </list> 
    </field>
   </record>
 
-  <!-- Definición de la vista de formulario para propiedades inmobiliarias -->
+  <!-- Definition of the form view for real estate properties -->
   <record id="estate_property_view_form" model="ir.ui.view">
   <field name="name">estate.property.form</field>
   <field name="model">estate.property</field>
   <field name="arch" type="xml">
     <form string="Property">
       <sheet>
-        <widget name="web_ribbon" title="Archivado" bg_color="text-bg-danger" invisible="active"/>
+        <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
         <div class="oe_button_box" name="button_box">
           <button class="oe_stat_button" type="object" name="toggle_active" icon="fa-archive">
             <field name="active" widget="boolean_button" options="{'terminology': 'archive'}"/>
           </button>
         </div>
         <group>
-          <group string="Información General">
+          <group string="General Information">
             <field name="tags_ids" widget="many2many_tags" class="badge text-bg-primary rounded-pill"/>
             <field name="name"/>
             <field name="postcode"/>
             <field name="property_type_id" options="{'no_create': true, 'no_open': true}" widget="selection"/>
             <field name="state"/>
           </group>
-          <group string="Detalles de la Propiedad">
+          <group string="Property Details">
             <field name="bedrooms"/>
             <field name="living_area"/>
             <field name="facades"/>
           </group>
         </group>
         <group>
-          <group string="Características Adicionales">
+          <group string="Additional Features">
             <field name="garage"/>
             <field name="garden"/>
             <field name="garden_area" invisible="not garden"/>
             <field name="garden_orientation" invisible="not garden"/>
             <field name="total_area"/>
           </group>
-          <group string="Información Comercial">
+          <group string="Commercial Information">
             <field name="selling_price"/>
+            <field name="best_price"/> <!-- Añadido el campo mejor oferta -->
             <field name="date_availability"/>
           </group>
         </group>
         <notebook>
-          <page string="Descripción">
+          <page string="Description">
             <field name="description"/>
           </page>
           <page string="Other Info">
@@ -87,7 +89,7 @@
              <field name="buyer_id" widget="selection"/>
           </group>
           </page>
-          <page string="Ofertas">
+          <page string="Offers">
             <field name="offer_ids"/>
           </page>
         </notebook>
@@ -97,7 +99,7 @@
   </record>
 
   
-  <!-- Definición de la vista de filtros para propiedades inmobiliarias -->
+  <!-- Definition of the filter view for real estate properties -->
   <record id="estate_property_view_search_filter" model="ir.ui.view">
     <field name="name">estate.property.view.search.filter</field>
     <field name="model">estate.property</field>
@@ -109,17 +111,18 @@
         <field name="bedrooms"/>
         <field name="living_area"/>
         <field name="selling_price"/>
+        <field name="best_price"/> <!-- Añadido el campo mejor oferta -->
         <separator/>
-        <filter string="Disponibles" name="available" domain="[('state', 'in', ['new', 'offer_received'])]"/>
-        <filter string="Vendidas" name="sold" domain="[('state', '=', 'sold')]"/>
+        <filter string="Available" name="available" domain="[('state', 'in', ['new', 'offer_received'])]"/>
+        <filter string="Sold" name="sold" domain="[('state', '=', 'sold')]"/>
         <separator/>
-        <filter string="Con Jardín" name="with_garden" domain="[('garden', '=', True)]"/>
-        <filter string="Con Garaje" name="with_garage" domain="[('garage', '=', True)]"/>
+        <filter string="With Garden" name="with_garden" domain="[('garden', '=', True)]"/>
+        <filter string="With Garage" name="with_garage" domain="[('garage', '=', True)]"/>
         <separator/>
-        <filter string="Archivados" name="inactive" domain="[('active', '=', False)]"/>
-        <group expand="1" string="Agrupar Por">
-          <filter string="Estado" name="groupby_state" context="{'group_by': 'state'}"/>
-          <filter string="Código Postal" name="groupby_postcode" context="{'group_by': 'postcode'}"/>
+        <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+        <group expand="1" string="Group By">
+          <filter string="Status" name="groupby_state" context="{'group_by': 'state'}"/>
+          <filter string="Postal Code" name="groupby_postcode" context="{'group_by': 'postcode'}"/>
         </group>
       </search>
     </field>
