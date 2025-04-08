@@ -1,10 +1,17 @@
 from odoo import models, fields, api
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
+from odoo.tools import float_compare, float_is_zero
 from dateutil.relativedelta import relativedelta
 
 class EstateProperty(models.Model):
     _name = 'estate.property'  # Identificador técnico del modelo en la base de datos
     _description = 'Estate Property'  # Descripción legible del modelo
+    
+    # Restricciones SQL para garantizar integridad de datos
+    _sql_constraints = [
+        ('check_expected_price', 'CHECK(expected_price > 0)', 'El precio esperado debe ser estrictamente positivo.'),
+        ('check_selling_price', 'CHECK(selling_price >= 0)', 'El precio de venta debe ser positivo.')
+    ]
     
     # Campo para el nombre de la propiedad, obligatorio
     name = fields.Char(string="Nombre", required=True)  # Nombre de la propiedad, requerido para su identificación
@@ -14,16 +21,18 @@ class EstateProperty(models.Model):
     active = fields.Boolean(string="Estado Activo", default=True, help="Indica si la propiedad está activa o archivada")  # Indica si la propiedad está activa o no
     # Campo de selección para el estado de la propiedad con diferentes opciones
     state = fields.Selection([
-        ("new", "New"),  # Nuevo
-        ("offer_received", "Offer Received"),  # Oferta recibida
-        ("offer_accepted", "Offer Accepted"),  # Oferta aceptada
-        ("sold", "Sold"),  # Vendido
-        ("canceled", "Canceled")  # Cancelado
+        ("new", "Nuevo"),  # Nuevo
+        ("offer_received", "Oferta Recibida"),  # Oferta recibida
+        ("offer_accepted", "Oferta Aceptada"),  # Oferta aceptada
+        ("sold", "Vendido"),  # Vendido
+        ("canceled", "Cancelado")  # Cancelado
     ], string="Estado", copy=False, required=True, default='new')  # Estado de la propiedad, obligatorio y no se copia al duplicar
     # Campo para el código postal de la propiedad
     postcode = fields.Char(string="Código Postal")  # Código postal asociado a la propiedad
     # Campo para la fecha de disponibilidad, no se copia al duplicar y por defecto es 3 meses después de hoy
     date_availability = fields.Date(string="Fecha de Disponibilidad", copy=False, default=lambda self: fields.Date.today() + relativedelta(months=3))  # Fecha en que la propiedad estará disponible
+    # Campo para el precio esperado, estrictamente positivo
+    expected_price = fields.Float(string="Precio Esperado", required=True, help="Debe ser estrictamente positivo")
     # Campo para el precio de venta, solo lectura y no se copia al duplicar
     selling_price = fields.Float(string="Precio de Venta", readonly=False, copy=False)  # Precio al que se vende la propiedad
     # Campo para el número de habitaciones, por defecto 2
@@ -53,6 +62,15 @@ class EstateProperty(models.Model):
     total_area = fields.Float(string="Área Total", compute="_compute_total_area")  # Área total calculada de la propiedad
     best_price = fields.Float(string="Mejor Oferta", compute="_compute_best_price")  # Mejor oferta recibida
     onchange_state = fields.Char(string="Onchange State")  # Estado de cambio para el campo
+
+    @api.constrains("expected_price", "selling_price")
+    def _check_selling_price(self):
+        precision = 2
+        for record in self:
+            if not float_is_zero(record.selling_price, precision_digits=precision):
+                min_price = record.expected_price * 0.9
+                if float_compare(record.selling_price, min_price, precision_digits=precision) < 0:
+                    raise ValidationError("El precio de venta no puede ser menor al 90% del precio esperado.")
 
     @api.depends("living_area", "garden_area")
     def _compute_total_area(self):

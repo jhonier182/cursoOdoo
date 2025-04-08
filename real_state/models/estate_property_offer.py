@@ -6,7 +6,12 @@ class EstatePropertyOffer(models.Model):
     _name = "estate.property.offer"
     _description = "Oferta de Propiedad"
     
-    price = fields.Float(string="Price")
+    # Restricciones SQL para garantizar integridad de datos
+    _sql_constraints = [
+        ('check_price', 'CHECK(price > 0)', 'El precio de oferta debe ser estrictamente positivo.')
+    ]
+    
+    price = fields.Float(string="Precio")
     status = fields.Selection([
         ("accepted", "Aceptada"),
         ("refused", "Rechazada"),
