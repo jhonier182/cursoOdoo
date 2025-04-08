@@ -5,7 +5,7 @@ from dateutil.relativedelta import relativedelta
 
 class EstateProperty(models.Model):
     _name = 'estate.property'  # Identificador técnico del modelo en la base de datos
-    _description = 'Estate Property'  # Descripción legible del modelo
+    _description = 'Propiedad Inmobiliaria'  # Descripción legible del modelo
     _order = "name asc"
     # Restricciones SQL para garantizar integridad de datos
     _sql_constraints = [
@@ -34,7 +34,7 @@ class EstateProperty(models.Model):
     # Campo para el precio esperado, estrictamente positivo
     expected_price = fields.Float(string="Precio Esperado", required=True, help="Debe ser estrictamente positivo")
     # Campo para el precio de venta, solo lectura y no se copia al duplicar
-    selling_price = fields.Float(string="Precio de Venta", readonly=False, copy=False)  # Precio al que se vende la propiedad
+    selling_price = fields.Float(string="Precio de Venta", readonly=True, copy=False)  # Precio al que se vende la propiedad
     # Campo para el número de habitaciones, por defecto 2
     bedrooms = fields.Integer(string="Habitaciones", default=2)  # Número de habitaciones en la propiedad
     # Campo para el área habitable en metros cuadrados
@@ -54,14 +54,14 @@ class EstateProperty(models.Model):
         ('east', 'Este'),    # Orientación este
         ('west', 'Oeste')    # Orientación oeste
     ], string="Orientación del Jardín")  # Orientación del jardín
-    property_type_id = fields.Many2one("estate.property.type", string="Property Type")  # Tipo de propiedad
-    salesperson_id = fields.Many2one("res.users", string="Salesman", index=True, default=lambda self: self.env.user)  # Vendedor asignado a la propiedad
-    buyer_id = fields.Many2one("res.partner", string="Buyer", index=True, copy=False)  # Comprador de la propiedad
-    tags_ids = fields.Many2many("estate.property.tag", string="Property Tags")  # Etiquetas asociadas a la propiedad
-    offer_ids = fields.One2many("estate.property.offer", "property_id", string="Offers")  # Ofertas recibidas para la propiedad
+    property_type_id = fields.Many2one("estate.property.type", string="Tipo de Propiedad")  # Tipo de propiedad
+    salesperson_id = fields.Many2one("res.users", string="Vendedor", index=True, default=lambda self: self.env.user)  # Vendedor asignado a la propiedad
+    buyer_id = fields.Many2one("res.partner", string="Comprador", index=True, copy=False)  # Comprador de la propiedad
+    tags_ids = fields.Many2many("estate.property.tag", string="Etiquetas de Propiedad")  # Etiquetas asociadas a la propiedad
+    offer_ids = fields.One2many("estate.property.offer", "property_id", string="Ofertas")  # Ofertas recibidas para la propiedad
     total_area = fields.Float(string="Área Total", compute="_compute_total_area")  # Área total calculada de la propiedad
     best_price = fields.Float(string="Mejor Oferta", compute="_compute_best_price")  # Mejor oferta recibida
-    onchange_state = fields.Char(string="Onchange State")  # Estado de cambio para el campo
+    onchange_state = fields.Char(string="Estado de Cambio")  # Estado de cambio para el campo
 
 
     @api.constrains("expected_price", "selling_price")
@@ -104,7 +104,7 @@ class EstateProperty(models.Model):
             self.garden_orientation = None  # Restablece la orientación del jardín a None
             
     def action_sold(self):
-        """Método que cambia el estado de la propiedad a 'sold' (vendida)"""
+        """Método que cambia el estado de la propiedad a 'vendida'"""
         for record in self:
             if record.state == 'canceled':
                 raise UserError("Las propiedades canceladas no pueden marcarse como vendidas.")
@@ -112,7 +112,7 @@ class EstateProperty(models.Model):
         return True
         
     def action_cancel(self):
-        """Método que cambia el estado de la propiedad a 'canceled' (cancelada)"""
+        """Método que cambia el estado de la propiedad a 'cancelada'"""
         for record in self:
             if record.state == 'sold':
                 raise UserError("Las propiedades vendidas no pueden cancelarse.")

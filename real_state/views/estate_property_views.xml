@@ -1,12 +1,10 @@
 <?xml version="1.0"?>
-<!-- Declaración XML que indica la versión del documento -->
 <odoo>
-  <!-- Definición de la acción de ventana para propiedades inmobiliarias -->
   <record id="estate_property_action" model="ir.actions.act_window">
-   <field name="name">Propiedades</field> <!-- Nombre que aparecerá en el menú -->
-   <field name="res_model">estate.property</field> <!-- Modelo de datos que se mostrará -->
-   <field name="view_mode">list,form</field> <!-- Modos de vista disponibles: lista y formulario -->
-   <field name="help" type="html"> <!-- Mensaje de ayuda cuando no hay registros -->
+   <field name="name">Propiedades</field>
+   <field name="res_model">estate.property</field>
+   <field name="view_mode">list,form</field>
+   <field name="help" type="html">
      <p class="o_view_nocontent_smiling_face">
          ¡Crea tu primera propiedad!
      </p>
@@ -19,35 +17,32 @@
     </field>
   </record>
 
-  <!-- Definición de la vista de lista para propiedades inmobiliarias -->
   <record id="estate_property_view_list" model="ir.ui.view">
-  <field name="name">estate.property.list</field> <!-- Nombre técnico de la vista -->
-  <field name="model">estate.property</field> <!-- Modelo asociado a esta vista -->
-  <field name="arch" type ="xml"> <!-- Arquitectura de la vista en XML -->
-       <list decoration-bf="state=='offer_accepted'" decoration-success="state=='offer_accepted'" decoration-danger="state=='canceled'" decoration-muted="state=='sold'"> <!-- Elemento raíz para la vista de lista -->
-        <field name="name" string="Título"/> <!-- Campo de nombre con etiqueta personalizada -->
-        <field name="property_type_id" string="Tipo de Propiedad"/> 
-        <field name="postcode" string="Código Postal"/> <!-- Campo de código postal -->
-        <field name="bedrooms" string="Habitaciones"/> <!-- Campo de número de habitaciones -->
-        <field name="living_area" string="Área Habitable (sqm)"/> <!-- Campo de área habitable -->
-        <field name="expected_price" string="Precio Esperado" sum="Total Esperado"/>
-        <field name="selling_price" string="Precio de Venta" sum="Total Vendido"/> <!-- Campo de precio de venta -->
-        <field name="date_availability" string="Disponible Desde" widget="date"/> <!-- Campo de fecha de disponibilidad -->
-        <field name="state" string="Estado" widget="badge" decoration-info="state == 'new'" decoration-success="state == 'offer_accepted'" decoration-warning="state == 'offer_received'" decoration-danger="state == 'canceled'" decoration-muted="state == 'sold'"/>
+  <field name="name">estate.property.list</field>
+  <field name="model">estate.property</field>
+  <field name="arch" type ="xml">
+       <list decoration-bf="state=='offer_accepted'" decoration-success="state=='offer_accepted'" decoration-danger="state=='canceled'" decoration-muted="state=='sold'">
+        <field name="name"/>
+        <field name="property_type_id"/> 
+        <field name="postcode"/>
+        <field name="bedrooms"/>
+        <field name="living_area"/>
+        <field name="expected_price" sum="Total Esperado"/>
+        <field name="selling_price" sum="Total Vendido"/>
+        <field name="date_availability" widget="date" optional="hide"/>
+        <field name="state" widget="badge" decoration-info="state == 'new'" decoration-success="state == 'offer_accepted'" decoration-warning="state == 'offer_received'" decoration-danger="state == 'canceled'" decoration-muted="state == 'sold'"/>
        </list> 
    </field>
   </record>
 
-  <!-- Definición de la vista de formulario para propiedades inmobiliarias -->
   <record id="estate_property_view_form" model="ir.ui.view">
   <field name="name">estate.property.form</field>
   <field name="model">estate.property</field>
   <field name="arch" type="xml">
-    <form string="Propiedad">
+    <form>
        <header>
-        <button name="action_sold" type="object" string="Vendido"/>
-        <button name="action_cancel" type="object" string="Cancelar"/>
-        <!--statusbar: para que no se pueda editar el estado de la propiedad-->
+        <button name="action_sold" type="object" invisible="state != 'offer_accepted'" string="Vendido"/>
+        <button name="action_cancel" type="object" invisible="state != 'offer_accepted'" string="Cancelar"/>
         <field name="state" widget="statusbar" statusbar_visible="new,offer_received,offer_accepted,sold"/>
        </header>
       <sheet>
@@ -58,56 +53,56 @@
           </button>
         </div>
         <group>
-          <group string="Información General">
-            <field name="tags_ids" widget="many2many_tags" class="pb-3" string="Etiquetas" />
-            <field name="name" string="Nombre"/>
-            <field name="postcode" string="Código Postal"/>
-            <field name="property_type_id" string="Tipo de Propiedad" options="{'no_create': true, 'no_open': true}" widget="selection"/>
+          <group>
+            <field name="tags_ids" widget="many2many_tags" options="{'color_field': 'color'}" class="pb-3"/>
+            <field name="name"/>
+            <field name="postcode"/>
+            <field name="property_type_id" options="{'no_create': True, 'no_open': True}" widget="selection"/>
             <field name="state" invisible="state == 'canceled'"/>
           </group>
 
-          <group string="Información Comercial">
-            <field name="expected_price" string="Precio Esperado"/>
-            <field name="selling_price" string="Precio de Venta"/>
-            <field name="best_price" string="Mejor Oferta"/> <!-- Añadido el campo mejor oferta -->
-            <field name="date_availability" string="Fecha de Disponibilidad"/>
+          <group>
+            <field name="expected_price"/>
+            <field name="selling_price"/>
+            <field name="best_price"/>
+            <field name="date_availability"/>
           </group>      
         </group>
 
         <notebook>
-          <page string="Descripción">
-            <field name="description" string="Descripción"/>
+          <page>
+            <field name="description"/>
             <group>
-             <field name="bedrooms" string="Habitaciones"/>
-              <field name="living_area" string="Área Habitable"/>
-              <field name="facades" string="Fachadas"/> 
+             <field name="bedrooms"/>
+              <field name="living_area"/>
+              <field name="facades"/> 
             </group>
             <group>
-              <field name="garage" string="Garaje"/>
-              <field name="garden" string="Jardín"/>
+              <field name="garage"/>
+              <field name="garden"/>
             </group>
             <group>
-              <field name="garden_area" string="Área del Jardín"/>
-              <field name="garden_orientation" string="Orientación del Jardín"/>
-              <field name="total_area" string="Área Total"/>
-            </group>
-          </page>
-          <page string="Otra Información"> 
-            <group>
-              <field name="salesperson_id" widget="selection" options="{'no_create': True}" string="Vendedor"/>
-              <field name="buyer_id" widget="selection" options="{'no_create': True}" string="Comprador"/>
+              <field name="garden_area" invisible="not garden"/>
+              <field name="garden_orientation" invisible="not garden"/>
+              <field name="total_area"/>
             </group>
           </page>
-          <page string="Ofertas">
-            <field name="offer_ids" string="Ofertas" context="{'default_property_id': id}">
+          <page> 
+            <group>
+              <field name="salesperson_id" widget="selection" options="{'no_create': True}"/>
+              <field name="buyer_id" widget="selection" options="{'no_create': True}"/>
+            </group>
+          </page>
+          <page>
+            <field name="offer_ids" context="{'default_property_id': id}">
               <list editable="bottom">
-                <field name="price" string="Precio" width="100"/>
-                <field name="partner_id" string="Cliente" widget="selection" options="{'no_create': True}" width="100"/>
-                <field name="validity" string="Validez" width="100"/>
-                <field name="date_deadline" string="Fecha Límite" width="100"/>
+                <field name="price" width="100"/>
+                <field name="partner_id" widget="selection" options="{'no_create': True}" width="100"/>
+                <field name="validity" width="100"/>
+                <field name="date_deadline" width="100"/>
                 <button name="action_accept" type="object" string="Aceptar" icon="fa-check" class="btn btn-success"/>
                 <button name="action_refuse" type="object" string="Rechazar" icon="fa-times" class="btn btn-danger"/>
-                <field name="status" string="Estado" width="100"/>
+                <field name="status" width="100"/>
               </list>
             </field>
           </page>
@@ -118,19 +113,18 @@
   </record>
 
   
-  <!-- Definición de la vista de filtro para propiedades inmobiliarias -->
   <record id="estate_property_view_search_filter" model="ir.ui.view">
     <field name="name">estate.property.view.search.filter</field>
     <field name="model">estate.property</field>
     <field name="arch" type="xml">
       <search>
-        <field name="name" string="Nombre"/>
-        <field name="postcode" string="Código Postal"/>
-         <field name="property_type_id" string="Tipo de Propiedad"/>
-        <field name="bedrooms" string="Habitaciones"/>
-        <field name="living_area" string="Área Habitable"/>
-        <field name="selling_price" string="Precio de Venta"/>
-        <field name="best_price" string="Mejor Oferta"/> <!-- Añadido el campo mejor oferta -->
+        <field name="name"/>
+        <field name="postcode"/>
+         <field name="property_type_id"/>
+        <field name="bedrooms"/>
+        <field name="living_area"/>
+        <field name="selling_price"/>
+        <field name="best_price"/>
         <separator/>
         <filter string="Disponible" name="available" domain="[('state', 'in', ['new', 'offer_received'])]"/>
         <filter string="Vendido" name="sold" domain="[('state', '=', 'sold')]"/>
