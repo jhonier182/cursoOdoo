@@ -70,7 +70,8 @@
         </group>
 
         <notebook>
-          <page>
+          <page string="Detalles de la Propiedad">
+             
             <field name="description"/>
             <group>
              <field name="bedrooms"/>
@@ -87,13 +88,13 @@
               <field name="total_area"/>
             </group>
           </page>
-          <page> 
+          <page string="Otra Información"> 
             <group>
               <field name="salesperson_id" widget="selection" options="{'no_create': True}"/>
               <field name="buyer_id" widget="selection" options="{'no_create': True}"/>
             </group>
           </page>
-          <page>
+          <page string="Ofertas">
             <field name="offer_ids" context="{'default_property_id': id}">
               <list editable="bottom">
                 <field name="price" width="100"/>
