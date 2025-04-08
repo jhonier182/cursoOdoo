@@ -45,12 +45,20 @@ class EstatePropertyOffer(models.Model):
         # Crear la oferta
         offer = super(EstatePropertyOffer, self).create(vals)
         
+        # Obtener la propiedad para trabajar con ella
+        property_obj = self.env['estate.property'].browse(offer.property_id.id)
+        
         # Actualizar el estado de la propiedad a "offer_received" si está en estado "new"
-        if offer.property_id.state == 'new':
-            offer.property_id.state = 'offer_received'
-            
-        # Calcular la mejor oferta
-        offer.property_id._compute_best_price()
+        if property_obj.state == 'new':
+            # Forzar la actualización usando el método write
+            property_obj.sudo().write({
+                'state': 'offer_received'
+            })
+            # Forzar la actualización en la base de datos inmediatamente
+            self.env.cr.commit()
+        
+        # Recalcular la mejor oferta
+        property_obj._compute_best_price()
         
         return offer
 

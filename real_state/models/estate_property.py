@@ -83,6 +83,10 @@ class EstateProperty(models.Model):
         for record in self:
             prices = record.offer_ids.mapped("price")
             record.best_price = max(prices) if prices else 0.0  # Si no hay ofertas, devuelve 0
+            
+            # Actualizar el estado de la propiedad basado en las ofertas
+            if prices and record.state == 'new':
+                record.state = 'offer_received'
 
     # Este método se activa cuando cambia el estado del campo 'garden'. 
     # Si el jardín está habilitado, se establece el área del jardín en 10 y la orientación en "norte". 

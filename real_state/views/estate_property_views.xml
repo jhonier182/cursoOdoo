@@ -21,7 +21,7 @@
   <field name="name">estate.property.list</field>
   <field name="model">estate.property</field>
   <field name="arch" type ="xml">
-       <list decoration-bf="state=='offer_accepted'" decoration-success="state=='offer_accepted'" decoration-danger="state=='canceled'" decoration-muted="state=='sold'">
+       <list decoration-bf="state=='offer_received'" decoration-success="state=='offer_accepted'" decoration-danger="state=='canceled'" decoration-muted="state=='sold'">
         <field name="name"/>
         <field name="property_type_id"/> 
         <field name="postcode"/>
@@ -95,7 +95,7 @@
             </group>
           </page>
           <page string="Ofertas">
-            <field name="offer_ids" context="{'default_property_id': id}">
+            <field name="offer_ids">
               <list editable="bottom">
                 <field name="price" width="100"/>
                 <field name="partner_id" widget="selection" options="{'no_create': True}" width="100"/>
@@ -103,7 +103,6 @@
                 <field name="date_deadline" width="100"/>
                 <button name="action_accept" type="object" string="Aceptar" icon="fa-check" class="btn btn-success"/>
                 <button name="action_refuse" type="object" string="Rechazar" icon="fa-times" class="btn btn-danger"/>
-                <field name="status" width="100"/>
               </list>
             </field>
           </page>
