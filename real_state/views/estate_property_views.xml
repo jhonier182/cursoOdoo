@@ -47,6 +47,8 @@
        <header>
         <button name="action_sold" type="object" string="Vendido"/>
         <button name="action_cancel" type="object" string="Cancelar"/>
+        <!--statusbar: para que no se pueda editar el estado de la propiedad-->
+        <field name="state" widget="statusbar" statusbar_visible="new,offer_received,offer_accepted,sold"/>
        </header>
       <sheet>
         <widget name="web_ribbon" title="Archivado" bg_color="text-bg-danger" invisible="active"/>
@@ -57,11 +59,11 @@
         </div>
         <group>
           <group string="Información General">
-            <field name="tags_ids" widget="many2many_tags" string="Etiquetas" />
+            <field name="tags_ids" widget="many2many_tags" class="pb-3" string="Etiquetas" />
             <field name="name" string="Nombre"/>
             <field name="postcode" string="Código Postal"/>
             <field name="property_type_id" string="Tipo de Propiedad" options="{'no_create': true, 'no_open': true}" widget="selection"/>
-            <field name="state" string="Estado"/>
+            <field name="state" groups="base.group_no_one" string="Estado"/>
           </group>
 
           <group string="Información Comercial">

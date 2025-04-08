@@ -31,8 +31,8 @@
                     </group>
                     <notebook>
                         <page string="Propiedades">
-                            <field name="property_ids" readonly="True"/> <!-- quita privilegio de editar al usuario asi no puede crear propiedades -->
-                                <list >
+                            <field name="property_ids" readonly="True">
+                                <list>
                                     <field name="name" string="Nombre"/>
                                     <field name="expected_price" string="Precio Esperado"/>
                                     <field name="state" string="Estado"/>
