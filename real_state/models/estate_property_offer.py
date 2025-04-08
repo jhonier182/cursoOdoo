@@ -4,16 +4,16 @@ from datetime import timedelta
 
 class EstatePropertyOffer(models.Model):
     _name = "estate.property.offer"
-    _description = "Estate Property Offer"
+    _description = "Oferta de Propiedad"
     
     price = fields.Float(string="Price")
     status = fields.Selection([
-        ("accepted", "Accepted"),
-        ("refused", "Refused"),
-    ], string="Status", copy=False)
-    partner_id = fields.Many2one("res.partner", string="Partner", required=True)
-    property_id = fields.Many2one("estate.property", string="Property", required=True) 
-    validity = fields.Integer(string="Validity", default=7)
+        ("accepted", "Aceptada"),
+        ("refused", "Rechazada"),
+    ], string="Estado", copy=False)
+    partner_id = fields.Many2one("res.partner", string="Cliente", required=True)
+    property_id = fields.Many2one("estate.property", string="Propiedad", required=True) 
+    validity = fields.Integer(string="Validez", default=7)
     date_deadline = fields.Date(string="Fecha de Caducidad", compute="_compute_date_deadline", inverse="_inverse_date_deadline")
 
     @api.depends("create_date", "validity")

@@ -1,5 +1,5 @@
 <odoo>
-    <!-- Action -->
+    <!-- Acción -->
     <record id="estate_property_offer_action" model="ir.actions.act_window">
         <field name="name">Ofertas de Propiedades</field>
         <field name="res_model">estate.property.offer</field>
@@ -17,9 +17,9 @@
                 <field name="date_deadline" string="Fecha de Caducidad" colspan="2"/>
                 <field name="validity" string="Validez" colspan="1"/>
                 <field name="price" string="Precio" colspan="1"/>
+                <button name="action_accept" type="object" string="Aceptar" icon="fa-check" class="btn btn-success"/>
+                <button name="action_refuse" type="object" string="Rechazar" icon="fa-times" class="btn btn-danger"/>
                 <field name="status" string="Estado" colspan="1"/>
-                <button name="action_accept" type="object" string="Aceptar" class="btn-primary"/>
-                <button name="action_refuse" type="object" string="Rechazar" class="btn-secondary"/>
             </list>
         </field>
     </record>
@@ -37,12 +37,10 @@
                         <field name="date_deadline" string="Fecha de Caducidad" colspan="1"/>
                         <field name="validity" string="Validez" colspan="1"/>
                         <field name="price" colspan="1"/>
+                        <button name="action_accept" type="object" class="btn btn-success"/>
+                        <button name="action_refuse" type="object" class="btn btn-danger"/>
                         <field name="status" colspan="1"/>
                     </group>
-                    <footer>
-                        <button name="action_accept" type="object" string="Aceptar" class="btn-primary"/>
-                        <button name="action_refuse" type="object" string="Rechazar" class="btn-secondary"/>
-                    </footer>
                 </sheet>
             </form>
         </field>
