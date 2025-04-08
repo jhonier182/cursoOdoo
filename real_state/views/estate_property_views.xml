@@ -96,7 +96,17 @@
             </group>
           </page>
           <page string="Ofertas">
-            <field name="offer_ids"/>
+            <field name="offer_ids" context="{'default_property_id': id}">
+              <list editable="bottom">
+                <field name="price"/>
+                <field name="partner_id" widget="selection" options="{'no_create': True}"/>
+                <field name="validity"/>
+                <field name="date_deadline"/>
+                <field name="status"/>
+                <button name="action_accept" type="object" string="Aceptar" icon="fa-check" class="text-success"/>
+                <button name="action_refuse" type="object" string="Rechazar" icon="fa-times" class="text-danger"/>
+              </list>
+            </field>
           </page>
         </notebook>
       </sheet>

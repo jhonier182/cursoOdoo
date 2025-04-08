@@ -1,4 +1,5 @@
 from odoo import models, fields, api
+from odoo.exceptions import UserError
 from datetime import timedelta
 
 class EstatePropertyOffer(models.Model):
@@ -9,7 +10,7 @@ class EstatePropertyOffer(models.Model):
     status = fields.Selection([
         ("accepted", "Accepted"),
         ("refused", "Refused"),
-    ], string="Status", default="accepted", copy=False)
+    ], string="Status", copy=False)
     partner_id = fields.Many2one("res.partner", string="Partner", required=True)
     property_id = fields.Many2one("estate.property", string="Property", required=True) 
     validity = fields.Integer(string="Validity", default=7)
@@ -33,4 +34,40 @@ class EstatePropertyOffer(models.Model):
             else:
                 record.validity = (record.date_deadline - fields.Date.today()).days
 
+    @api.model
+    def create(self, vals):
+        # Crear la oferta
+        offer = super(EstatePropertyOffer, self).create(vals)
+        
+        # Actualizar el estado de la propiedad a "offer_received" si está en estado "new"
+        if offer.property_id.state == 'new':
+            offer.property_id.state = 'offer_received'
+            
+        # Calcular la mejor oferta
+        offer.property_id._compute_best_price()
+        
+        return offer
 
+    def action_accept(self):
+        for record in self:
+            # Verificar si ya hay ofertas aceptadas para esta propiedad
+            if record.property_id.offer_ids.filtered(lambda o: o.status == 'accepted' and o.id != record.id):
+                raise UserError("Ya existe una oferta aceptada para esta propiedad.")
+            
+            # Cambiar el estado de la oferta a aceptada
+            record.status = "accepted"
+            
+            # Actualizar la propiedad con los datos de la oferta aceptada
+            record.property_id.buyer_id = record.partner_id
+            record.property_id.selling_price = record.price
+            
+            # Cambiar el estado de la propiedad a "offer_accepted"
+            record.property_id.state = "offer_accepted"
+            
+            return True
+        
+    def action_refuse(self):
+        for record in self:
+            record.status = "refused"
+            return True
+           
