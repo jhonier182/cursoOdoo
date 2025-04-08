@@ -25,8 +25,8 @@
         <field name="name"/>
         <field name="property_type_id"/> 
         <field name="postcode"/>
-        <field name="bedrooms"/>
-        <field name="living_area"/>
+        <field name="bedrooms" optional="hide"/>
+        <field name="living_area" optional="hide"/>
         <field name="expected_price" sum="Total Esperado"/>
         <field name="selling_price" sum="Total Vendido"/>
         <field name="date_availability" widget="date" optional="hide"/>
