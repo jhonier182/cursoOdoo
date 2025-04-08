@@ -6,7 +6,7 @@ from dateutil.relativedelta import relativedelta
 class EstateProperty(models.Model):
     _name = 'estate.property'  # Identificador técnico del modelo en la base de datos
     _description = 'Estate Property'  # Descripción legible del modelo
-    
+    _order = "name asc"
     # Restricciones SQL para garantizar integridad de datos
     _sql_constraints = [
         ('check_expected_price', 'CHECK(expected_price > 0)', 'El precio esperado debe ser estrictamente positivo.'),
@@ -62,6 +62,7 @@ class EstateProperty(models.Model):
     total_area = fields.Float(string="Área Total", compute="_compute_total_area")  # Área total calculada de la propiedad
     best_price = fields.Float(string="Mejor Oferta", compute="_compute_best_price")  # Mejor oferta recibida
     onchange_state = fields.Char(string="Onchange State")  # Estado de cambio para el campo
+
 
     @api.constrains("expected_price", "selling_price")
     def _check_selling_price(self):

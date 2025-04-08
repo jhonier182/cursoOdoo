@@ -5,6 +5,7 @@ from datetime import timedelta
 class EstatePropertyOffer(models.Model):
     _name = "estate.property.offer"
     _description = "Oferta de Propiedad"
+    _order = "price desc"
     
     # Restricciones SQL para garantizar integridad de datos
     _sql_constraints = [

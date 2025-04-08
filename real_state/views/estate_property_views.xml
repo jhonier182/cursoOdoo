@@ -63,7 +63,7 @@
             <field name="name" string="Nombre"/>
             <field name="postcode" string="Código Postal"/>
             <field name="property_type_id" string="Tipo de Propiedad" options="{'no_create': true, 'no_open': true}" widget="selection"/>
-            <field name="state" groups="base.group_no_one" string="Estado"/>
+            <field name="state" invisible="state == 'canceled'"/>
           </group>
 
           <group string="Información Comercial">
