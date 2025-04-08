@@ -6,7 +6,7 @@
         <field name="view_mode">list,form</field>
     </record>
 
-    <!-- Search & Filter -->
+    <!-- Búsqueda y Filtro -->
     <record id="estate_property_type_view_search_filter" model="ir.ui.view">
         <field name="name">estate.property.type.view.search.filter</field>
         <field name="model">estate.property.type</field>
@@ -17,5 +17,31 @@
         </field>
     </record>
 
+    <!-- Vista de Formulario -->
+    <record id="estate_property_type_view_form" model="ir.ui.view">
+        <field name="name">estate.property.type.form</field>
+        <field name="model">estate.property.type</field>
+        <field name="arch" type="xml">
+            <form string="Tipo de Propiedad">
+                <sheet>
+                    <group>
+                        <div class="oe_title">
+                            <h1><field name="name"/></h1>
+                        </div>
+                    </group>
+                    <notebook>
+                        <page string="Propiedades">
+                            <field name="property_ids" readonly="True"/> <!-- quita privilegio de editar al usuario asi no puede crear propiedades -->
+                                <list >
+                                    <field name="name" string="Nombre"/>
+                                    <field name="expected_price" string="Precio Esperado"/>
+                                    <field name="state" string="Estado"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
 </odoo>
-<!-- End of Selection -->

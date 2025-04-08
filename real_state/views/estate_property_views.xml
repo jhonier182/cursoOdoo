@@ -65,6 +65,7 @@
           </group>
 
           <group string="Información Comercial">
+            <field name="expected_price" string="Precio Esperado"/>
             <field name="selling_price" string="Precio de Venta"/>
             <field name="best_price" string="Mejor Oferta"/> <!-- Añadido el campo mejor oferta -->
             <field name="date_availability" string="Fecha de Disponibilidad"/>
