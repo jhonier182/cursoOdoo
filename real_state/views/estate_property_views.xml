@@ -24,16 +24,16 @@
   <field name="name">estate.property.list</field> <!-- Nombre técnico de la vista -->
   <field name="model">estate.property</field> <!-- Modelo asociado a esta vista -->
   <field name="arch" type ="xml"> <!-- Arquitectura de la vista en XML -->
-       <list> <!-- Elemento raíz para la vista de lista -->
-        <field name="name" string="Título" width="200"/> <!-- Campo de nombre con etiqueta personalizada -->
-        <field name="active" string="Estado" widget="boolean_toggle" width="100"/>
-        <field name="postcode" string="Código Postal" width="100"/> <!-- Campo de código postal -->
-         <field name="property_type_id" string="Tipo de Propiedad" width="100"/> 
-        <field name="bedrooms" string="Habitaciones" width="100"/> <!-- Campo de número de habitaciones -->
-        <field name="living_area" string="Área Habitable" width="100"/> <!-- Campo de área habitable -->
-        <field name="selling_price" string="Precio de Venta" width="100"/> <!-- Campo de precio de venta -->
-        <field name="best_price" string="Mejor Oferta" width="100"/> <!-- Campo de mejor oferta -->
-        <field name="date_availability" string="Disponible Desde" width="150"/> <!-- Campo de fecha de disponibilidad -->
+       <list decoration-bf="state=='offer_accepted'" decoration-success="state=='offer_accepted'" decoration-danger="state=='canceled'" decoration-muted="state=='sold'"> <!-- Elemento raíz para la vista de lista -->
+        <field name="name" string="Título"/> <!-- Campo de nombre con etiqueta personalizada -->
+        <field name="property_type_id" string="Tipo de Propiedad"/> 
+        <field name="postcode" string="Código Postal"/> <!-- Campo de código postal -->
+        <field name="bedrooms" string="Habitaciones"/> <!-- Campo de número de habitaciones -->
+        <field name="living_area" string="Área Habitable (sqm)"/> <!-- Campo de área habitable -->
+        <field name="expected_price" string="Precio Esperado" sum="Total Esperado"/>
+        <field name="selling_price" string="Precio de Venta" sum="Total Vendido"/> <!-- Campo de precio de venta -->
+        <field name="date_availability" string="Disponible Desde" widget="date"/> <!-- Campo de fecha de disponibilidad -->
+        <field name="state" string="Estado" widget="badge" decoration-info="state == 'new'" decoration-success="state == 'offer_accepted'" decoration-warning="state == 'offer_received'" decoration-danger="state == 'canceled'" decoration-muted="state == 'sold'"/>
        </list> 
    </field>
   </record>
