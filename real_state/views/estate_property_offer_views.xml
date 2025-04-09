@@ -40,6 +40,7 @@
                         <button name="action_accept" type="object" class="btn btn-success" title="Aceptar"/>
                         <button name="action_refuse" type="object" class="btn btn-danger" title="Rechazar"/>
                         <field name="status"/>
+                        
                     </group>
                 </sheet>
             </form>

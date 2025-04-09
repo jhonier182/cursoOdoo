@@ -1,17 +1,16 @@
-from odoo import fields, models
+from odoo import models, fields
 
 class EstatePropertyTag(models.Model):
-    _name="estate.property.tag"
-    _description ="Estate property tag"
+    _name = 'estate.property.tag'
+    _description = 'Etiqueta de Propiedad Inmobiliaria'
     _order = "name"
-
-
-    name = fields.Char(required=True)   
-    color = fields.Integer()
-
-    # Restricciones SQL para garantizar integridad de datos
+    
+    # SQL constraints para asegurar nombres únicos
     _sql_constraints = [
-        ('unique_name', 'UNIQUE(name)', 'El nombre de la etiqueta debe ser único.')
+        ('check_name', 'UNIQUE(name)', 'El nombre de la etiqueta debe ser único.')
     ]
+    
+    name = fields.Char(string="Nombre", required=True)
+    color = fields.Integer(string="Color")
 
    

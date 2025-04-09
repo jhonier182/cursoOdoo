@@ -12,9 +12,10 @@
        Aquí puedes crear y gestionar todas tus propiedades inmobiliarias.
      </p>
      <p>
-       ¡Vamos a conseguir ese próximo gran trato!
+       ¡Vamos a conseguir ese próximo gran trato! 
      </p>
     </field>
+    <field name ="context">{'search_default_available': True }</field>
   </record>
 
   <record id="estate_property_view_list" model="ir.ui.view">
@@ -95,14 +96,16 @@
             </group>
           </page>
           <page string="Ofertas">
-            <field name="offer_ids">
+            <field name="offer_ids" readonly="state in [ 'offer_accepted', 'sold', 'canceled']">
               <list editable="bottom">
                 <field name="price" width="100"/>
                 <field name="partner_id" widget="selection" options="{'no_create': True}" width="100"/>
                 <field name="validity" width="100"/>
                 <field name="date_deadline" width="100"/>
-                <button name="action_accept" type="object" string="Aceptar" icon="fa-check" class="btn btn-success"/>
-                <button name="action_refuse" type="object" string="Rechazar" icon="fa-times" class="btn btn-danger"/>
+                <field name="property_state"/>
+                <button name="action_accept" type="object" string="Aceptar" icon="fa-check" class="btn btn-success" invisible="status or property_state in [ 'offer_accepted', 'sold', 'canceled']"/>
+                <button name="action_refuse" type="object" string="Rechazar" icon="fa-times" class="btn btn-danger" invisible="status or property_state in ['sold', 'canceled']"/>
+                <field name="property_type_id"/>
               </list>
             </field>
           </page>
